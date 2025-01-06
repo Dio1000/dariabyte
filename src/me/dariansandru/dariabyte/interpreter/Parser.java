@@ -278,6 +278,24 @@ public abstract class Parser {
                 Executor.executeMOV(line);
             }
 
+            case "REALLOC" -> {
+                if (!ValidParse.validREALLOC(line).getElem1()){
+                    errorList.add(ValidParse.validREALLOC(line).getElem2());
+                    validCode = false;
+                    return;
+                }
+                Executor.executeREALLOC(line);
+            }
+
+            case "DEALLOC" -> {
+                if (!ValidParse.validDEALLOC(line).getElem1()){
+                    errorList.add(ValidParse.validDEALLOC(line).getElem2());
+                    validCode = false;
+                    return;
+                }
+                Executor.executeDEALLOC(line);
+            }
+
             default -> {
                 errorList.add("Command " + line + " could not be found.");
                 validCode = false;

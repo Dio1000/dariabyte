@@ -235,4 +235,37 @@ public abstract class ValidParse {
         if (!validArgumentNumber(size, 1).getElem1()) return validArgumentNumber(size, 1);
         return new Pair<>(true, "Correct");
     }
+
+    public static Pair<Boolean, String> validDEALLOC(String line){
+        line = line.strip();
+        int size = line.split(" ").length;
+
+        if (!validArgumentNumber(size, 2).getElem1()) return validArgumentNumber(size, 2);
+        if (!Parser.varTypeMap.containsKey(line.split(" ")[1]))
+            return new Pair<>(false, "Variable " + line.split(" ")[1] + " does not exist.");
+
+        return new Pair<>(true, "Correct");
+    }
+
+    public static Pair<Boolean, String> validREALLOC(String line){
+        line = line.strip();
+        int size = line.split(" ").length;
+
+        if (!validArgumentNumber(size, 3).getElem1()) return validArgumentNumber(size, 3);
+        if (!Parser.varTypeMap.containsKey(line.split(" ")[1]))
+            return new Pair<>(false, "Variable " + line.split(" ")[1] + " does not exist.");
+
+        String var1 = line.split(" ")[1];
+        String var2 = line.split(" ")[2];
+
+        String argumentType1 = getType(var1);
+        if (Objects.equals(argumentType1, "INT") && !Utilities.isInteger(var2))
+            return new Pair<>(false, "Cannot reallocate value " + var2 + " to variable " + var1);
+        else if (Objects.equals(argumentType1, "BINT") && !Utilities.isBinaryInteger(var2))
+            return new Pair<>(false, "Cannot reallocate value " + var2 + " to variable " + var1);
+        else if (Objects.equals(argumentType1, "STRING") && !Utilities.isString(var2))
+            return new Pair<>(false, "Cannot reallocate value " + var2 + " to variable " + var1);
+
+        return new Pair<>(true, "Correct");
+    }
 }

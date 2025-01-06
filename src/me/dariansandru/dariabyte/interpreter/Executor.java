@@ -289,4 +289,17 @@ public class Executor {
         if (Integer.parseInt(value1) == Integer.parseInt(value2))
             Parser.currentlyExecutedIndex = ValidParse.getLineBySection(destination);
     }
+
+    public static void executeDEALLOC(String line){
+        String var = line.split(" ")[1];
+        Parser.varTypeMap.remove(var);
+    }
+
+    public static void executeREALLOC(String line){
+        String var = line.split(" ")[1];
+        String varType = ValidParse.getValue(var);
+
+        Pair<String, String> Pair = new Pair<>(varType, line.split(" ")[2]);
+        Parser.varTypeMap.put(line.split(" ")[1], Pair);
+    }
 }
